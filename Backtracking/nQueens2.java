@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Nqueens {
+public class nQueens2 {
     public static boolean canSit(char arr[][], int row, int col){
         // Check top
         for(int i=row-1;i>=0;i--){
@@ -25,20 +25,22 @@ public class Nqueens {
         return true;
     }
 
-    public static void nQueens(char arr[][], int row){
+    public static boolean nQueens(char arr[][], int row){
         
         if(row == arr.length){
-            count++;
             printArr(arr);
-            return;
+            return true;
         }
         for(int col=0;col<arr.length;col++){
             if(canSit(arr, row, col)){
                 arr[row][col] = 'Q';
-                nQueens(arr, row+1);
+                if(nQueens(arr, row+1)){
+                    return true;
+                };
                 arr[row][col] = '.';
             }
         }
+        return false;
     }
 
     public static void printArr(char arr[][]){
@@ -51,7 +53,6 @@ public class Nqueens {
         }
         
     }
-    static int count;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter the size of the board:");
@@ -64,7 +65,13 @@ public class Nqueens {
                 board[i][j] = '.';      // It means it is empty
             }
         }
-        nQueens(board, 0);
-        System.out.println("Total no. of ways to place the queen: "+count);
+        if(nQueens(board, 0)){
+            System.out.println("Solution is possible");
+            printArr(board);
+        }
+        else{
+            System.out.println("Solution is not possible");
+        }
+        
     }
 }
